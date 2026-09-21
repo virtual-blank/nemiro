@@ -20,6 +20,16 @@ class PostgresSettings(BaseSettings):
         return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
+class CelerySettings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=ENV_FILE, env_prefix="CELERY_", extra="ignore")
+    login: str
+    password: str
+    port: int
+
+    @property
+    def url(self) -> str:
+        return f"amqp://{self.login}:{self.password}@rabbitmq:{self.port}//"
+
 class JwtSettings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_prefix="JWT_", extra="ignore")
     access_token_expire_minutes: int
@@ -31,6 +41,9 @@ class JwtSettings(BaseSettings):
 def get_postgres_settings() -> PostgresSettings:
     return PostgresSettings()
 
+@lru_cache
+def get_celery_settings() -> CelerySettings:
+    return CelerySettings()
 
 @lru_cache
 def get_jwt_settings() -> JwtSettings:

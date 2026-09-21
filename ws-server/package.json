@@ -1,0 +1,12 @@
+{
+  "name": "nemiro-ws",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "celery-node": "^0.5.9",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.0.2",
+    "redis": "^4.6.10",
+    "ws": "^8.14.2"
+  }
+}
